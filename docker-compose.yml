@@ -1,30 +1,29 @@
-version: '3'
-services:
-  # MySQL Service
-  mysql:
-    image: mysql:8.0
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: mydatabase
-      MYSQL_USER: root
-      MYSQL_PASSWORD: rootpassword
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
+version: '3.8'
 
-  # Spring Boot Service
-  app:
+services:
+  shopishop:
+    image: shopishop
     build:
-      context: ./  # Path to your Spring Boot Dockerfile
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    depends_on:
-      - mysql  # Wait for MySQL to start
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/shopishop
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/ShopiShop
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: rootpassword
+      SPRING_DATASOURCE_PASSWORD: Root123@
+      SPRING_DATASOURCE_DRIVER-CLASS-NAME: com.mysql.cj.jdbc.Driver
+      SPRING_JPA_HIBERNATE_DDL-AUTO: update
+      SPRING_JPA_SHOW-SQL: "true"
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+    depends_on:
+      - db
 
-volumes:
-  mysql_data:
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: ShopiShop
+      MYSQL_ROOT_PASSWORD: Root123@
+    ports:
+      - "4306:3306"
