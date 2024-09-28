@@ -1,1 +1,1 @@
-web: java -Dserver.port=${PORT} -jar target/shopishop-test.jar
+web: java -Dserver.port=$PORT -jar target/shopishop-test.jar
