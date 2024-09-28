@@ -8,6 +8,11 @@ target/
 .idea/
 build/
 .vscode/-
+*.jar
+*.war
+*.class
+*.log
+
 
 ### STS ###
 .apt_generated
